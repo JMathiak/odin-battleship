@@ -6,13 +6,16 @@ function createShip(length) {
   ship.sunk = false;
 
   for (let i = 0; i < length; i++) {
-    ship.health.push("false");
+    ship.health.push({
+      shipPoint: i,
+      hitStatus: "false",
+    });
   }
 
   ship.isSunk = function () {
     console.log(this.length);
     for (let j = 0; j < this.length; j++) {
-      if (this.health[j] === "false") {
+      if (this.health[j].hitStatus === "false") {
         return false;
       }
     }
@@ -21,7 +24,7 @@ function createShip(length) {
   };
 
   ship.hit = function (hitPoint) {
-    this.health[hitPoint] = "true";
+    this.health[hitPoint].hitStatus = "true";
   };
 
   return ship;
@@ -44,11 +47,11 @@ function createGameBoard() {
     let ship = createShip(length);
     if (direction === "horizontal") {
       for (let i = 0; i < length; i++) {
-        this.board[yCord][xCord + i] = ship.length;
+        this.board[yCord][xCord + i] = ship.health[i];
       }
     } else if (direction === "vertical") {
       for (let i = 0; i < length; i++) {
-        this.board[yCord + i][xCord] = ship.length;
+        this.board[yCord + i][xCord] = ship.health[i];
       }
     }
   };
