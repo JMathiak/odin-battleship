@@ -7,14 +7,15 @@ function createShip(name, direction, length, startingCord, endingCord) {
   ship.health = [];
   ship.sunk = false;
 
+  console.log(endingCord);
   if (direction == "horizontal") {
     for (let i = 0; i < length; i++) {
       ship.health.push({
         shipPoint: i,
         hitStatus: "false",
         coordinates: {
-          xCord: startingCord.xCord + i,
-          yCord: startingCord.yCord,
+          xCord: startingCord.startingXCord + i,
+          yCord: startingCord.startingYCord,
         },
       });
     }
@@ -24,8 +25,8 @@ function createShip(name, direction, length, startingCord, endingCord) {
         shipPoint: i,
         hitStatus: "false",
         coordinates: {
-          xCord: startingCord.xCord,
-          yCord: startingCord.yCord + i,
+          xCord: startingCord.startingXCord,
+          yCord: startingCord.startingYCord + i,
         },
       });
     }
@@ -64,20 +65,18 @@ function createGameBoard() {
 
   gameBoard.placeShip = function (direction, name, length, yCord, xCord) {
     let endingCord = {};
+    let startingCord = { startingXCord: xCord, startingYCord: yCord };
+
     if (direction == "horizontal") {
-      endingCord.endingXCord = xCord + length;
+      endingCord.endingXCord = xCord + length - 1;
       endingCord.endingYCord = yCord;
     } else if (direction == "vertical") {
       endingCord.endingXCord = xCord;
-      endingCord.endingYCord = yCord + length;
+      endingCord.endingYCord = yCord + length - 1;
     }
-    let ship = createShip(
-      name,
-      direction,
-      length,
-      { startingXCord: xCord, startingYCord: yCord },
-      endingCord
-    );
+    console.log(startingCord);
+    console.log(endingCord);
+    let ship = createShip(name, direction, length, startingCord, endingCord);
     gameBoard.ships.push(ship);
     if (direction == "horizontal") {
       for (let i = 0; i < length; i++) {
@@ -93,7 +92,7 @@ function createGameBoard() {
           name: ship.name,
           spot: ship.health[i],
         };
-        this.board[yCord + i][xCord] = ship.health[i];
+        this.board[yCord + i][xCord] = placeObj;
       }
     }
   };
@@ -108,9 +107,18 @@ function createGameBoard() {
       let ship = filteredArr[0];
       let pointArr = ship.health.filter(
         (point) =>
-          point.coordinates.xCord != xCord && point.coordinates.yCord != yCord
+          point.coordinates.xCord == xCord && point.coordinates.yCord == yCord
       );
+      console.log(pointArr);
       ship.hit(pointArr[0].shipPoint);
+      ship.isSunk();
+    } else if (this.board[yCord][xCord] == "empty") {
+      this.board[yCord][xCord] = "miss";
+    } else if (
+      this.board[yCord][xCord] == "miss" ||
+      this.board[yCord][xCord].spot.hitStatus == "true"
+    ) {
+      return "Invalid Guess";
     }
   };
 

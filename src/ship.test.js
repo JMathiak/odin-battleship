@@ -81,3 +81,36 @@ test("Coordinates for board[0][3] should match. y = 0", () => {
   b1.receiveAttack(0, 3);
   expect(b1.board[0][3].spot.coordinates.yCord).toBe(0);
 });
+
+test("Hit status for board[0][3] should be true", () => {
+  let b1 = gameModules.createGameBoard();
+  b1.placeShip("horizontal", "Battleship", 4, 0, 3);
+  b1.receiveAttack(0, 3);
+  expect(b1.board[0][3].spot.hitStatus).toBe("true");
+});
+
+test("A ship should be sunk after 4 (or the length) hits", () => {
+  let b1 = gameModules.createGameBoard();
+  b1.placeShip("horizontal", "Battleship", 4, 0, 3);
+  b1.receiveAttack(0, 3);
+  b1.receiveAttack(0, 4);
+  b1.receiveAttack(0, 5);
+  b1.receiveAttack(0, 6);
+  expect(b1.ships[0].sunk).toBe(true);
+});
+
+test("Multiple ships can be placed at once", () => {
+  let b1 = gameModules.createGameBoard();
+  b1.placeShip("horizontal", "Battleship", 4, 0, 3);
+  b1.placeShip("vertical", "Cruiser", 3, 2, 1);
+  expect(b1.ships.length).toBe(2);
+  expect(b1.ships[0].name).toBe("Battleship");
+  expect(b1.ships[1].name).toBe("Cruiser");
+});
+
+test("Guessing the same point will return with a message about it not being valid", () => {
+  let b1 = gameModules.createGameBoard();
+  b1.receiveAttack(0, 3);
+  expect(b1.board[0][3]).toBe("miss");
+  expect(b1.receiveAttack(0, 3)).toBe("Invalid Guess");
+});
