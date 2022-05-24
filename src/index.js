@@ -100,7 +100,6 @@ function createGameBoard() {
     }
 
     let ship = createShip(name, direction, length, startingCord, endingCord);
-    console.log(direction);
     if (this.checkForValidPlacement(ship) == false) {
       return false;
     } else {
@@ -165,16 +164,14 @@ function createGameBoard() {
   return gameBoard;
 }
 
-function createPlayer() {
+function createPlayer(type) {
   let player = {};
+  player.type = type;
   player.board = createGameBoard();
 
   return player;
 }
-let b1 = createGameBoard();
-b1.placeShip("horizontal", "Battleship", 4, 0, 3);
-b1.placeShip("vertical", "Cruiser", 3, 0, 3);
-console.log(b1.board);
+
 exports.createShip = createShip;
 exports.createGameBoard = createGameBoard;
 
