@@ -202,3 +202,49 @@ exports.createGameBoard = createGameBoard;
     Destroyer - 2
 
 */
+
+/*
+
+For computer guessess:
+let xGuess = Math.random(7);
+let yGuess = Math.random(7);
+while(!p1.board.receiveAttack(yGuess, xGuess))
+{
+  xGuess = Math.random(7);
+  yGuess = Math.random(7);
+}
+
+For game loop"
+let turnCounter = 1;
+let winner = null;
+while(winner == null)
+{
+  if(turnCounter%2 == )
+  {
+    get guess values
+    while(!p2.board.receiveAttack(values))
+    {
+      update guess values
+    }
+    check for all sunk
+  }else{
+let xGuess = Math.random(7);
+let yGuess = Math.random(7);
+while(!p1.board.receiveAttack(yGuess, xGuess))
+{
+  xGuess = Math.random(7);
+  yGuess = Math.random(7);
+}
+check for all sunk
+  }
+  turnCounter++;
+}
+
+
+
+Need a way to wait for new values if guess from user is invalid
+Maybe an onclick method that sends values
+Need a way to get return from check if all are sunk? Maybe remove it from receive
+attack and call it after every turn 
+
+*/
