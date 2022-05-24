@@ -149,7 +149,7 @@ function createGameBoard() {
       this.board[yCord][xCord] == "miss" ||
       this.board[yCord][xCord].spot.hitStatus == "true"
     ) {
-      return "Invalid Guess";
+      return false;
     }
   };
 

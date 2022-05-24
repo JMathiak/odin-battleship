@@ -166,7 +166,7 @@ test("Guessing the same point will return with a message about it not being vali
   let b1 = gameModules.createGameBoard();
   b1.receiveAttack(0, 3);
   expect(b1.board[0][3]).toBe("miss");
-  expect(b1.receiveAttack(0, 3)).toBe("Invalid Guess");
+  expect(b1.receiveAttack(0, 3)).toBe(false);
 });
 
 test("Not All Sunk", () => {
