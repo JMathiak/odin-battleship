@@ -181,7 +181,7 @@ exports.createGameBoard = createGameBoard;
 /*
 2d Array:
   x->   0       1         2         3       4       5       6
-    0 ["empty", "empty", "empty", "bs", "bs", "bs", "bs"],
+    0 ["empty", "empty", "empty", "empty", "empty", "empty", "empty"],
     1 ["empty", "empty", "empty", "empty", "empty", "empty", "empty"],
     2 ["empty", "empty", "empty", "empty", "empty", "empty", "empty"],
     3 ["empty", "empty", "empty", "empty", "empty", "empty", "empty"],
@@ -193,6 +193,7 @@ exports.createGameBoard = createGameBoard;
     Each new sub-array is a y incrementation
     Each index inside of the subarray is a x- incrementation
     Board will be y = 0 from the top x = 0 from the left
+    board[row][column]
 */
 
 /*
