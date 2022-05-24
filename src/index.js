@@ -7,7 +7,6 @@ function createShip(name, direction, length, startingCord, endingCord) {
   ship.health = [];
   ship.sunk = false;
 
-  console.log(endingCord);
   if (direction == "horizontal") {
     for (let i = 0; i < length; i++) {
       ship.health.push({
@@ -33,7 +32,6 @@ function createShip(name, direction, length, startingCord, endingCord) {
   }
 
   ship.isSunk = function () {
-    console.log(this.length);
     for (let j = 0; j < this.length; j++) {
       if (this.health[j].hitStatus === "false") {
         return false;
@@ -74,8 +72,7 @@ function createGameBoard() {
       endingCord.endingXCord = xCord;
       endingCord.endingYCord = yCord + length - 1;
     }
-    console.log(startingCord);
-    console.log(endingCord);
+
     let ship = createShip(name, direction, length, startingCord, endingCord);
     gameBoard.ships.push(ship);
     if (direction == "horizontal") {
@@ -109,7 +106,6 @@ function createGameBoard() {
         (point) =>
           point.coordinates.xCord == xCord && point.coordinates.yCord == yCord
       );
-      console.log(pointArr);
       ship.hit(pointArr[0].shipPoint);
       ship.isSunk();
     } else if (this.board[yCord][xCord] == "empty") {
@@ -125,11 +121,15 @@ function createGameBoard() {
   return gameBoard;
 }
 
+function createPlayer() {
+  let player = {};
+
+  return player;
+}
 let b1 = createGameBoard();
 b1.placeShip("horizontal", "Battleship", 4, 0, 3);
-b1.receiveAttack(0, 3);
-console.log(b1.board);
 console.log(b1.board[0][3]);
+b1.receiveAttack(0, 3);
 exports.createShip = createShip;
 exports.createGameBoard = createGameBoard;
 

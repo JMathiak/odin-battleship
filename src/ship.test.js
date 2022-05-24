@@ -1,18 +1,60 @@
 const gameModules = require("./index.js");
 
 test("ship returns not sunk", () => {
-  let ship1 = gameModules.createShip("Battleship", 4);
+  let startingCord = {
+    xCord: 3,
+    yCord: 0,
+  };
+  let endingCord = {
+    xCord: 6,
+    yCord: 0,
+  };
+  let ship1 = gameModules.createShip(
+    "Battleship",
+    "horizontal",
+    4,
+    startingCord,
+    endingCord
+  );
   expect(ship1.isSunk()).toBe(false);
 });
 
 test("ship is hit in spot 1", () => {
-  let ship1 = gameModules.createShip("Battleship", 4);
+  let startingCord = {
+    xCord: 3,
+    yCord: 0,
+  };
+  let endingCord = {
+    xCord: 6,
+    yCord: 0,
+  };
+  let ship1 = gameModules.createShip(
+    "Battleship",
+    "horizontal",
+    4,
+    startingCord,
+    endingCord
+  );
   ship1.hit(1);
   expect(ship1.health[1].hitStatus).toBe("true");
 });
 
 test("ship is sunk", () => {
-  let ship1 = gameModules.createShip("Carrier", 5);
+  let startingCord = {
+    xCord: 3,
+    yCord: 0,
+  };
+  let endingCord = {
+    xCord: 3,
+    yCord: 4,
+  };
+  let ship1 = gameModules.createShip(
+    "Carrier",
+    "vertical",
+    5,
+    startingCord,
+    endingCord
+  );
   ship1.hit(0);
   ship1.hit(1);
   ship1.hit(2);
@@ -24,41 +66,53 @@ test("ship is sunk", () => {
 test("Ship is placed horizontally", () => {
   let b1 = gameModules.createGameBoard();
   b1.placeShip("horizontal", "Battleship", 4, 0, 3);
-  expect(b1.board[0][3]).toStrictEqual({ shipPoint: 0, hitStatus: "false" });
+  expect(b1.board[0][3]).toStrictEqual({
+    name: "Battleship",
+    spot: {
+      hitStatus: "false",
+      shipPoint: 0,
+      coordinates: { xCord: 3, yCord: 0 },
+    },
+  });
 });
 
 test("Ship is placed horizontally", () => {
   let b1 = gameModules.createGameBoard();
   b1.placeShip("horizontal", "Battleship", 4, 0, 3);
-  expect(b1.board[0][4]).toStrictEqual({ shipPoint: 1, hitStatus: "false" });
-});
-test("Ship is placed horizontally", () => {
-  let b1 = gameModules.createGameBoard();
-  b1.placeShip("horizontal", "Battleship", 4, 0, 3);
-  expect(b1.board[0][5]).toStrictEqual({ shipPoint: 2, hitStatus: "false" });
-});
-test("Ship is placed horizontally", () => {
-  let b1 = gameModules.createGameBoard();
-  b1.placeShip("horizontal", "Battleship", 4, 0, 3);
-  expect(b1.board[0][6]).toStrictEqual({ shipPoint: 3, hitStatus: "false" });
+  expect(b1.board[0][6]).toStrictEqual({
+    name: "Battleship",
+    spot: {
+      hitStatus: "false",
+      shipPoint: 3,
+      coordinates: { xCord: 6, yCord: 0 },
+    },
+  });
 });
 
 test("Ship is placed vertically", () => {
   let b1 = gameModules.createGameBoard();
   b1.placeShip("vertical", "Cruiser", 3, 3, 2);
-  expect(b1.board[3][2]).toStrictEqual({ shipPoint: 0, hitStatus: "false" });
+  expect(b1.board[3][2]).toStrictEqual({
+    name: "Cruiser",
+    spot: {
+      shipPoint: 0,
+      hitStatus: "false",
+      coordinates: { xCord: 2, yCord: 3 },
+    },
+  });
 });
 
 test("Ship is placed vertically", () => {
   let b1 = gameModules.createGameBoard();
   b1.placeShip("vertical", "Cruiser", 3, 3, 2);
-  expect(b1.board[4][2]).toStrictEqual({ shipPoint: 1, hitStatus: "false" });
-});
-
-test("Ship is placed vertically", () => {
-  let b1 = gameModules.createGameBoard();
-  b1.placeShip("vertical", "Cruiser", 3, 3, 2);
-  expect(b1.board[5][2]).toStrictEqual({ shipPoint: 2, hitStatus: "false" });
+  expect(b1.board[5][2]).toStrictEqual({
+    name: "Cruiser",
+    spot: {
+      shipPoint: 2,
+      hitStatus: "false",
+      coordinates: { xCord: 2, yCord: 5 },
+    },
+  });
 });
 
 test("Ship is placed and sunk after 3 hits", () => {
