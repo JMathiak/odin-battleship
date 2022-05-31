@@ -29,9 +29,24 @@
   #player-board{
       grid-area: pb;
       border: 1px solid black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+     
   }
+
+  .player{
+      width: 85%;
+      height: 85%;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    border: 1px solid red;
+}
 
   #guess-board{
       grid-area: gb;
       border: 1px solid black;
   }
+  
+  
