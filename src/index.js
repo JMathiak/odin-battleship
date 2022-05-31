@@ -72,12 +72,18 @@ function createGameBoard() {
     let endingRow = shipToPlace.endingCord.endingYCord;
 
     if (shipToPlace.direction == "vertical") {
+      if (endingRow > 6) {
+        return false;
+      }
       for (let i = startingRow; i < endingRow; i++) {
         if (this.board[i][startingColumn] !== "empty") {
           return false;
         }
       }
     } else if (shipToPlace.direction == "horizontal") {
+      if (endingColumn > 6) {
+        return false;
+      }
       for (let j = startingColumn; j < endingColumn; j++) {
         if (this.board[startingRow][j] !== "empty") {
           return false;
@@ -139,17 +145,17 @@ function createGameBoard() {
       );
       ship.hit(pointArr[0].shipPoint);
       ship.isSunk();
-      if (ship.sunk == true) {
-        this.checkForAllSunk();
-      }
+      return true;
     } else if (this.board[yCord][xCord] == "empty") {
       this.board[yCord][xCord] = "miss";
+      return true;
     } else if (
       this.board[yCord][xCord] == "miss" ||
       this.board[yCord][xCord].spot.hitStatus == "true"
     ) {
       return false;
     }
+    return true;
   };
 
   gameBoard.checkForAllSunk = function () {
@@ -172,9 +178,87 @@ function createPlayer(type) {
   return player;
 }
 
+function gameLoop() {
+  let hum = createPlayer("human");
+  let comp = createPlayer("computer");
+  let winner = null;
+  let turnCounter = 1;
+  let shipNames = [
+    "Carrier",
+    "Battleship",
+    "Cruiser",
+    "Submarine",
+    "Destroyer",
+  ];
+  let shipLengths = [5, 4, 3, 3, 2];
+  let directions = ["horizontal", "vertical"];
+  let xCord = Math.floor(Math.random() * 7);
+  let yCord = Math.floor(Math.random() * 7);
+  let direction = Math.floor(Math.random() * 1);
+
+  for (let i = 0; i < shipNames.length; i++) {
+    while (
+      !comp.board.placeShip(
+        directions[direction],
+        shipNames[i],
+        shipLengths[i],
+        yCord,
+        xCord
+      )
+    ) {
+      xCord = Math.floor(Math.random() * 7);
+      yCord = Math.floor(Math.random() * 7);
+    }
+  }
+  xCord = Math.floor(Math.random() * 7);
+  yCord = Math.floor(Math.random() * 7);
+
+  for (let j = 0; j < shipNames.length; j++) {
+    while (
+      !hum.board.placeShip(
+        directions[direction],
+        shipNames[j],
+        shipLengths[j],
+        yCord,
+        xCord
+      )
+    ) {
+      xCord = Math.floor(Math.random() * 7);
+      yCord = Math.floor(Math.random() * 7);
+    }
+  }
+
+  while (winner == null) {
+    xCord = Math.floor(Math.random() * 7);
+    yCord = Math.floor(Math.random() * 7);
+    while (!comp.board.receiveAttack(yCord, xCord)) {
+      xCord = Math.floor(Math.random() * 7);
+      yCord = Math.floor(Math.random() * 7);
+    }
+    if (comp.board.checkForAllSunk() == true) {
+      winner = "Human";
+    }
+
+    if (winner == null) {
+      xCord = Math.floor(Math.random() * 7);
+      yCord = Math.floor(Math.random() * 7);
+      while (!hum.board.receiveAttack(yCord, xCord)) {
+        xCord = Math.floor(Math.random() * 7);
+        yCord = Math.floor(Math.random() * 7);
+      }
+      if (hum.board.checkForAllSunk() == true) {
+        winner = "Computer";
+      }
+    }
+  }
+
+  return winner;
+}
+
+gameLoop();
 exports.createShip = createShip;
 exports.createGameBoard = createGameBoard;
-
+exports.gameLoop = gameLoop;
 /*
 2d Array:
   x->   0       1         2         3       4       5       6

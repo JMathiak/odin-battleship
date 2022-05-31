@@ -209,14 +209,18 @@ test("All Sunk - 2 Ship", () => {
   expect(b1.checkForAllSunk()).toBe(true);
 });
 
-test.only("Invalid Ship Placement", () => {
+test("Invalid Ship Placement", () => {
   let b1 = gameModules.createGameBoard();
   b1.placeShip("horizontal", "Battleship", 4, 0, 3);
   expect(b1.placeShip("vertical", "Cruiser", 3, 0, 3)).toBe(false);
 });
 
-test.only("Valid Ship Placement", () => {
+test("Valid Ship Placement", () => {
   let b1 = gameModules.createGameBoard();
   b1.placeShip("horizontal", "Battleship", 4, 0, 3);
   expect(b1.placeShip("vertical", "Cruiser", 3, 1, 3)).toBe(true);
+});
+
+test.only("Game Loop Returns a Winner", () => {
+  expect(gameModules.gameLoop()).not.toBeNull();
 });
