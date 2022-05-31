@@ -258,6 +258,29 @@ function gameLoop() {
   return winner;
 }
 
+function testRender() {
+  let parentDiv = document.getElementById("player");
+  let rowArr = ["A", "B", "C", "D", "E", "F", "G"];
+  for (let i = 0; i < 7; i++) {
+    let row = document.createElement("div");
+    row.className = "row";
+    row.setAttribute("Y-Cord", i);
+    for (let j = 0; j < 8; j++) {
+      let box = document.createElement("div");
+      box.className = "box";
+      box.setAttribute("X-Cord", j);
+      if (j == 0) {
+        box.innerText = rowArr[i];
+      } else {
+        box.innerText = j;
+      }
+
+      row.appendChild(box);
+    }
+    parentDiv.appendChild(row);
+  }
+}
+testRender();
 gameLoop();
 exports.createShip = createShip;
 exports.createGameBoard = createGameBoard;
