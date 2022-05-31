@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body{
+      height: 100%;
+  }
+
+  .container{
+      height: 100%;
+      width: 100%;
+      display: grid;
+      grid-template-rows: 1fr 4fr 1fr;
+  }
+
+  .header{
+      border: 1px solid red;
+  }
+
+  .board{
+      border:1px solid blue;
+      display: grid;
+      grid-template-columns: .5fr 3fr 3fr .5fr;
+      grid-template-areas: '. pb gb .';
+  }
+
+
+  #player-board{
+      grid-area: pb;
+      border: 1px solid black;
+  }
+
+  #guess-board{
+      grid-area: gb;
+      border: 1px solid black;
+  }

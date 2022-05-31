@@ -332,3 +332,13 @@ Need a way to get return from check if all are sunk? Maybe remove it from receiv
 attack and call it after every turn 
 
 */
+
+/*
+-Render empty board
+-Need a way to track which square is getting clicked in relation to the 2d array
+-Render board after placing each ship w/a ship marker
+-Update squares after each guess on each side. 
+-Maybe use get source to get 2d array coordinates
+
+
+*/
