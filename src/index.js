@@ -76,8 +76,9 @@ function createGameBoard() {
         console.log(shipToPlace.name, endingRow);
         return false;
       }
-      for (let i = startingRow; i < endingRow; i++) {
-        if (this.board[i][startingColumn] !== "empty") {
+      for (let i = startingRow; i <= endingRow; i++) {
+        console.log(shipToPlace.name, this.board[i][startingColumn]);
+        if (this.board[i][startingColumn] != "empty") {
           return false;
         }
       }
@@ -88,8 +89,9 @@ function createGameBoard() {
       if (endingColumn > 6) {
         return false;
       }
-      for (let j = startingColumn; j < endingColumn; j++) {
-        if (this.board[startingRow][j] !== "empty") {
+      for (let j = startingColumn; j <= endingColumn; j++) {
+        console.log(shipToPlace.name, this.board[startingRow][j]);
+        if (this.board[startingRow][j] != "empty") {
           return false;
         }
       }
@@ -308,6 +310,7 @@ function testRender() {
       if (i == 0) {
         if (j !== 7) {
           box.innerText = rowArr[j];
+          box.innerText += "(" + j + ")";
         }
       } else if (j == 0) {
         box.innerText = i;
