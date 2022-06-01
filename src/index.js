@@ -9,7 +9,7 @@ function createShip(name, direction, length, startingCord, endingCord) {
   ship.direction = direction;
 
   if (direction == "horizontal") {
-    for (let i = 0; i < length; i++) {
+    for (let i = 1; i <= length; i++) {
       ship.health.push({
         shipPoint: i,
         hitStatus: "false",
@@ -20,7 +20,7 @@ function createShip(name, direction, length, startingCord, endingCord) {
       });
     }
   } else if (direction == "vertical") {
-    for (let i = 0; i < length; i++) {
+    for (let i = 1; i <= length; i++) {
       ship.health.push({
         shipPoint: i,
         hitStatus: "false",
@@ -60,22 +60,20 @@ function createGameBoard() {
     ["empty", "empty", "empty", "empty", "empty", "empty", "empty"],
     ["empty", "empty", "empty", "empty", "empty", "empty", "empty"],
     ["empty", "empty", "empty", "empty", "empty", "empty", "empty"],
-    ["empty", "empty", "empty", "empty", "empty", "empty", "empty"],
-    ["empty", "empty", "empty", "empty", "empty", "empty", "empty"],
-    ["empty", "empty", "empty", "empty", "empty", "empty", "empty"],
   ];
 
   gameBoard.checkForValidPlacement = function (shipToPlace) {
-    if (this.ships[0] == null) {
-      return true;
-    }
     let startingColumn = shipToPlace.startingCord.startingXCord;
     let startingRow = shipToPlace.startingCord.startingYCord;
     let endingColumn = shipToPlace.endingCord.endingXCord;
     let endingRow = shipToPlace.endingCord.endingYCord;
 
     if (shipToPlace.direction == "vertical") {
+      if (startingRow == 6) {
+        return false;
+      }
       if (endingRow > 6) {
+        console.log(shipToPlace.name, endingRow);
         return false;
       }
       for (let i = startingRow; i < endingRow; i++) {
@@ -84,6 +82,9 @@ function createGameBoard() {
         }
       }
     } else if (shipToPlace.direction == "horizontal") {
+      if (startingColumn == 6) {
+        return false;
+      }
       if (endingColumn > 6) {
         return false;
       }
@@ -259,29 +260,85 @@ function gameLoop() {
 }
 
 function testRender() {
+  let shipNames = [
+    "Carrier",
+    "Battleship",
+    "Cruiser",
+    "Submarine",
+    "Destroyer",
+  ];
+  let shipLengths = [5, 4, 3, 3, 2];
+  let directions = ["horizontal", "vertical"];
+  let xCord = Math.floor(Math.random() * 7);
+  let yCord = Math.floor(Math.random() * 7);
+  let direction = Math.floor(Math.random() * 2);
+  let player = createPlayer("human");
+  for (let j = 0; j < shipNames.length; j++) {
+    while (
+      !player.board.placeShip(
+        directions[direction],
+        shipNames[j],
+        shipLengths[j],
+        yCord,
+        xCord
+      )
+    ) {
+      xCord = Math.floor(Math.random() * 7);
+      yCord = Math.floor(Math.random() * 7);
+      direction = Math.floor(Math.random() * 1);
+    }
+  }
   let parentDiv = document.getElementById("player");
   let rowArr = ["A", "B", "C", "D", "E", "F", "G"];
-  for (let i = 0; i < 7; i++) {
+  //Outer loop is rows, inner loop is columns
+  for (let i = 0; i < 8; i++) {
     let row = document.createElement("div");
     row.className = "row";
     row.setAttribute("Y-Cord", i);
+    if (i == 0) {
+      let box = document.createElement("div");
+      box.className = "box";
+      box.innerText = "Y/X ";
+      row.appendChild(box);
+    }
     for (let j = 0; j < 8; j++) {
       let box = document.createElement("div");
       box.className = "box";
       box.setAttribute("X-Cord", j);
-      if (j == 0) {
-        box.innerText = rowArr[i];
+      if (i == 0) {
+        if (j !== 7) {
+          box.innerText = rowArr[j];
+        }
+      } else if (j == 0) {
+        box.innerText = i;
       } else {
-        box.innerText = j;
+        if (player.board.board[i - 1][j - 1] == "empty") {
+          box.innerText = player.board.board[i - 1][j - 1];
+        } else {
+          box.innerText = player.board.board[i - 1][j - 1].name;
+          box.classList.add("ship");
+          box.addEventListener("click", function () {
+            let shipName = player.board.board[i - 1][j - 1].name;
+            let filteredArr = player.board.ships.filter(
+              (sh) => sh.name == shipName
+            );
+            let ship = filteredArr[0];
+            console.log(ship);
+            console.log(player.board.board);
+          });
+        }
       }
 
-      row.appendChild(box);
+      if (j == 7 && i == 0) {
+      } else {
+        row.appendChild(box);
+      }
     }
     parentDiv.appendChild(row);
   }
 }
 testRender();
-gameLoop();
+// gameLoop();
 exports.createShip = createShip;
 exports.createGameBoard = createGameBoard;
 exports.gameLoop = gameLoop;
