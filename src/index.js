@@ -1,3 +1,4 @@
+import emptyRender from "./modules/board";
 function createShip(name, direction, length, startingCord, endingCord) {
   var ship = {};
   ship.name = name;
@@ -340,8 +341,10 @@ function testRender() {
     parentDiv.appendChild(row);
   }
 }
-testRender();
+//testRender();
 // gameLoop();
+emptyRender("player");
+emptyRender("guess");
 exports.createShip = createShip;
 exports.createGameBoard = createGameBoard;
 exports.gameLoop = gameLoop;
