@@ -35,7 +35,7 @@
      
   }
 
-  #player{
+  #player, #guess{
       display: flex;
       flex-direction: column;
       width: 85%;
@@ -47,6 +47,9 @@
   #guess-board{
       grid-area: gb;
       border: 1px solid black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
   
   .box{
@@ -62,8 +65,10 @@
   .row{
       height: 14%;
       width: 100%;
-      margin-bottom: 0;
+      margin-bottom: 0px;
       float: left;
+      /* overflow: hidden; */
+      display: inline-flex;
   }
 
   .ship{
