@@ -1,4 +1,4 @@
-import emptyRender from "./modules/board";
+import { emptyRender, placeShipListeners } from "./modules/board";
 function createShip(name, direction, length, startingCord, endingCord) {
   var ship = {};
   ship.name = name;
@@ -343,11 +343,43 @@ function testRender() {
 }
 //testRender();
 // gameLoop();
-emptyRender("player");
+let ships = [
+  {
+    name: "Carrier",
+    length: 5,
+    placed: false,
+  },
+  {
+    name: "Battleship",
+    length: 4,
+    placed: false,
+  },
+  {
+    name: "Cruiser",
+    length: 3,
+    placed: false,
+  },
+  {
+    name: "Submarine",
+    length: 3,
+    placed: false,
+  },
+  {
+    name: "Destroyer",
+    length: 2,
+    placed: false,
+  },
+];
+let user = createPlayer("human");
+emptyRender("player", user);
+export default user;
+placeShipListeners();
 emptyRender("guess");
+
 exports.createShip = createShip;
 exports.createGameBoard = createGameBoard;
 exports.gameLoop = gameLoop;
+
 /*
 2d Array:
   x->   0       1         2         3       4       5       6
