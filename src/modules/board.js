@@ -1,4 +1,4 @@
-import user from "../index.js";
+import { user, comp, shipsPlaced } from "../index.js";
 
 let ships = [
   {
@@ -98,7 +98,12 @@ function refreshBoard(div, player, ship) {
   }
   removeAddShips();
   shipIndex++;
-  placeShipListeners();
+  if (shipIndex < 5) {
+    placeShipListeners();
+  }
+  if (shipIndex == 5) {
+    shipsPlaced = true;
+  }
 }
 
 function placeShipListeners() {

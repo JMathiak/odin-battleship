@@ -393,14 +393,36 @@ Do nothing until on click function is called
 On click function for human guesses:
 -Get coordinates
 -Comp.receive attack
+-Update guess square with class for hit or miss
 -Check for all sunk
 - if all sunk, remove all listeners, return, and display winner
 -if not all sunk, remove listener from previous guess, --> computer turn 
 -generate random guess until valid guess
 -Human.receive attack
+-Update board with guess result
 -Check for all sunk
 -if all sunk, remove all listeneres, return, display winner
 -if not all sunk --> do nothing. 
+
+*/
+
+/*
+receive attack 
+find row div by attribute --> document.getElementById("player").querySelectorAll('[y-Cord="1"]');
+find box div by attribute
+let rw = document.getElementById("player").querySelectorAll('[y-Cord="1"]');
+let box = rw[0].querySelectorAll('[x-Cord="1"]');
+console.log(box[0]);
+if(player.board.board[yGuess -1][xGuess -1] == 'miss')
+{
+  add class name miss
+}else{
+  add class name hit
+}
+  Need functions for:
+    -Removing all guess listeners
+    
+
 
 */
 
