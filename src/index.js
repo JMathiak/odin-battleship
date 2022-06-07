@@ -341,6 +341,7 @@ function testRender() {
     parentDiv.appendChild(row);
   }
 }
+
 //testRender();
 // gameLoop();
 let ships = [
@@ -371,10 +372,37 @@ let ships = [
   },
 ];
 let user = createPlayer("human");
+let comp = createPlayer("computer");
+let turnCount = 0;
+let shipsPlaced = false;
+export { user, comp, turnCount, shipsPlaced };
 emptyRender("player", user);
-export default user;
 placeShipListeners();
 emptyRender("guess");
+
+function waitForShips() {
+  if (shipsPlaced != true) {
+    setTimeout(waitForShips, 500);
+    return;
+  }
+}
+
+/*
+After wait for ships, call function that sets up computer player
+Do nothing until on click function is called
+On click function for human guesses:
+-Get coordinates
+-Comp.receive attack
+-Check for all sunk
+- if all sunk, remove all listeners, return, and display winner
+-if not all sunk, remove listener from previous guess, --> computer turn 
+-generate random guess until valid guess
+-Human.receive attack
+-Check for all sunk
+-if all sunk, remove all listeneres, return, display winner
+-if not all sunk --> do nothing. 
+
+*/
 
 exports.createShip = createShip;
 exports.createGameBoard = createGameBoard;
@@ -461,5 +489,12 @@ attack and call it after every turn
 -Update squares after each guess on each side. 
 -Maybe use get source to get 2d array coordinates
 
+
+-Export computer player
+-Export turn counter to track when comp should make a move and when to check for
+all sunk for whose board
+- Event listener on right side board for comp.board.receiveAttack
+- Empty while loop with condition of turnCount mod 2 == 0, add turnCount increment
+- to guess on click 
 
 */
