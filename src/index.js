@@ -1,4 +1,8 @@
-import { emptyRender, placeShipListeners } from "./modules/board";
+import {
+  emptyRender,
+  placeShipListeners,
+  addGuessClick,
+} from "./modules/board";
 function createShip(name, direction, length, startingCord, endingCord) {
   var ship = {};
   ship.name = name;
@@ -10,24 +14,24 @@ function createShip(name, direction, length, startingCord, endingCord) {
   ship.direction = direction;
 
   if (direction == "horizontal") {
-    for (let i = 1; i <= length; i++) {
+    for (let i = 0; i <= length; i++) {
       ship.health.push({
         shipPoint: i,
         hitStatus: "false",
         coordinates: {
-          xCord: startingCord.startingXCord + i,
-          yCord: startingCord.startingYCord,
+          xCord: parseInt(startingCord.startingXCord) + i,
+          yCord: parseInt(startingCord.startingYCord),
         },
       });
     }
   } else if (direction == "vertical") {
-    for (let i = 1; i <= length; i++) {
+    for (let i = 0; i <= length; i++) {
       ship.health.push({
         shipPoint: i,
         hitStatus: "false",
         coordinates: {
           xCord: startingCord.startingXCord,
-          yCord: startingCord.startingYCord + i,
+          yCord: parseInt(startingCord.startingYCord) + i,
         },
       });
     }
@@ -35,7 +39,7 @@ function createShip(name, direction, length, startingCord, endingCord) {
 
   ship.isSunk = function () {
     for (let j = 0; j < this.length; j++) {
-      if (this.health[j].hitStatus === "false") {
+      if (this.health[j].hitStatus == "false") {
         return false;
       }
     }
@@ -68,7 +72,7 @@ function createGameBoard() {
     let startingRow = shipToPlace.startingCord.startingYCord;
     let endingColumn = shipToPlace.endingCord.endingXCord;
     let endingRow = shipToPlace.endingCord.endingYCord;
-
+    console.log(startingColumn, startingRow, endingColumn, endingRow);
     if (shipToPlace.direction == "vertical") {
       if (startingRow == 6) {
         return false;
@@ -105,11 +109,11 @@ function createGameBoard() {
     let startingCord = { startingXCord: xCord, startingYCord: yCord };
 
     if (direction == "horizontal") {
-      endingCord.endingXCord = xCord + length - 1;
+      endingCord.endingXCord = parseInt(xCord) + length - 1;
       endingCord.endingYCord = yCord;
     } else if (direction == "vertical") {
       endingCord.endingXCord = xCord;
-      endingCord.endingYCord = yCord + length - 1;
+      endingCord.endingYCord = parseInt(yCord) + length - 1;
     }
 
     let ship = createShip(name, direction, length, startingCord, endingCord);
@@ -123,7 +127,8 @@ function createGameBoard() {
             name: ship.name,
             spot: ship.health[i],
           };
-          this.board[yCord][xCord + i] = placeObj;
+          console.log(parseInt(xCord) + i);
+          this.board[yCord][parseInt(xCord) + i] = placeObj;
         }
       } else if (direction == "vertical") {
         for (let i = 0; i < length; i++) {
@@ -131,7 +136,7 @@ function createGameBoard() {
             name: ship.name,
             spot: ship.health[i],
           };
-          this.board[yCord + i][xCord] = placeObj;
+          this.board[parseInt(yCord) + i][xCord] = placeObj;
         }
       }
     }
@@ -146,10 +151,15 @@ function createGameBoard() {
       let shipName = this.board[yCord][xCord].name;
       let filteredArr = this.ships.filter((sh) => sh.name == shipName);
       let ship = filteredArr[0];
+      console.log(ship);
+      console.log("Received X Cord", xCord);
+      console.log("Received Y Cord", yCord);
       let pointArr = ship.health.filter(
         (point) =>
-          point.coordinates.xCord === xCord && point.coordinates.yCord === yCord
+          point.coordinates.xCord == xCord && point.coordinates.yCord == yCord
       );
+      console.log(shipName);
+      console.log(pointArr);
       ship.hit(pointArr[0].shipPoint);
       ship.isSunk();
       return true;
@@ -385,8 +395,35 @@ function waitForShips() {
     setTimeout(waitForShips, 500);
     return;
   }
+  placeComputerShips();
+  addGuessClick();
 }
 
+function placeComputerShips() {
+  let directions = ["horizontal", "vertical"];
+  let xCord = Math.floor(Math.random() * 7);
+  let yCord = Math.floor(Math.random() * 7);
+  let direction = Math.floor(Math.random() * 2);
+  for (let i = 0; i < ships.length; i++) {
+    while (
+      !comp.board.placeShip(
+        directions[direction],
+        ships[i].name,
+        ships[i].length,
+        yCord,
+        xCord
+      )
+    ) {
+      xCord = Math.floor(Math.random() * 7);
+      yCord = Math.floor(Math.random() * 7);
+      direction = Math.floor(Math.random() * 2);
+    }
+    console.log(ships[i].name, "placed");
+  }
+  console.log(comp.board.board);
+}
+
+waitForShips();
 /*
 After wait for ships, call function that sets up computer player
 Do nothing until on click function is called
@@ -410,9 +447,7 @@ On click function for human guesses:
 receive attack 
 find row div by attribute --> document.getElementById("player").querySelectorAll('[y-Cord="1"]');
 find box div by attribute
-let rw = document.getElementById("player").querySelectorAll('[y-Cord="1"]');
-let box = rw[0].querySelectorAll('[x-Cord="1"]');
-console.log(box[0]);
+
 if(player.board.board[yGuess -1][xGuess -1] == 'miss')
 {
   add class name miss
