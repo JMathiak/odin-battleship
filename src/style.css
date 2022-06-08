@@ -74,3 +74,11 @@
   .ship{
       background: grey;
   }
+
+  .hit{
+      background: red;
+  }
+
+  .miss{
+      background: green;
+  }
