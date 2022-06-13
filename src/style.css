@@ -11,7 +11,7 @@
       height: 100%;
       width: 100%;
       display: grid;
-      grid-template-rows: 1fr 4fr 1fr;
+      grid-template-rows: 1fr 4fr 1fr 1fr;
   }
 
   .header{
@@ -81,4 +81,11 @@
 
   .miss{
       background: green;
+  }
+
+  .buttons{
+      border: 1px solid lime;
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
