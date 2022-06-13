@@ -2,6 +2,7 @@ import {
   emptyRender,
   placeShipListeners,
   addGuessClick,
+  clearBoards,
 } from "./modules/board";
 function createShip(name, direction, length, startingCord, endingCord) {
   var ship = {};
@@ -381,14 +382,6 @@ let ships = [
     placed: false,
   },
 ];
-let user = createPlayer("human");
-let comp = createPlayer("computer");
-let turnCount = 0;
-let shipsPlaced = false;
-export { user, comp, turnCount, shipsPlaced };
-emptyRender("player", user);
-placeShipListeners();
-emptyRender("guess");
 
 function waitForShips() {
   if (shipsPlaced != true) {
@@ -423,7 +416,44 @@ function placeComputerShips() {
   console.log(comp.board.board);
 }
 
-waitForShips();
+function setUpGame() {
+  // let user = createPlayer("human");
+  // let comp = createPlayer("computer");
+  // let turnCount = 0;
+  // let shipsPlaced = false;
+  // Above need to be global for the export
+  // export { user, comp, turnCount, shipsPlaced };
+  emptyRender("player");
+  placeShipListeners();
+  emptyRender("guess");
+  waitForShips();
+}
+
+function playAgain() {
+  clearBoards();
+  clearArrays();
+  shipsPlaced = false;
+  emptyRender("player");
+  placeShipListeners();
+  emptyRender("guess");
+  waitForShips();
+}
+
+function clearArrays() {
+  //Outter rows, inner columns
+  for (let i = 0; i < 7; i++) {
+    for (let j = 0; j < 7; j++) {
+      user.board.board[i][j] = "empty";
+      comp.board.board[i][j] = "empty";
+    }
+  }
+}
+let user = createPlayer("human");
+let comp = createPlayer("computer");
+let turnCount = 0; //Not used?
+let shipsPlaced = false;
+export { user, comp, turnCount, shipsPlaced, playAgain };
+setUpGame();
 /*
 After wait for ships, call function that sets up computer player
 Do nothing until on click function is called
@@ -554,4 +584,12 @@ all sunk for whose board
 - Empty while loop with condition of turnCount mod 2 == 0, add turnCount increment
 - to guess on click 
 
+*/
+
+/*
+6/13/22 What's Left To Do:
+-Modals
+-Styling
+-Play Again Buttons -> on modal and on screen
+-Add radio for horiz vert placement
 */

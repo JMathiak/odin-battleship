@@ -1,4 +1,4 @@
-import { user, comp, shipsPlaced } from "../index.js";
+import { user, comp, shipsPlaced, playAgain } from "../index.js";
 
 let ships = [
   {
@@ -28,7 +28,7 @@ let ships = [
   },
 ];
 let shipIndex = 0;
-function emptyRender(div, player) {
+function emptyRender(div) {
   let parentDiv = document.getElementById(div);
   let rowArr = ["A", "B", "C", "D", "E", "F", "G"];
   //Outer loop is rows, inner loop is columns
@@ -129,7 +129,10 @@ function placeShipListeners() {
 }
 
 function onAddShipClick() {
-  let direction = "horizontal";
+  let direction = document.querySelector(
+    'input[name = "direction"]:checked'
+  ).value;
+  console.log(direction);
   console.log(event.target);
   console.log(event.target.parentNode.getAttribute("y-cord"));
   console.log("xcord", event.target.getAttribute("x-cord"));
@@ -210,4 +213,20 @@ function addGuessClick() {
   }
 }
 
-export { emptyRender, placeShipListeners, addGuessClick };
+function clearBoards() {
+  let userBoard = document.getElementById("player");
+  let guessBoard = document.getElementById("guess");
+  while (userBoard.firstChild) {
+    userBoard.removeChild(userBoard.removeChild);
+  }
+  while (guessBoard.firstChild) {
+    guessBoard.removeChild(guessBoard.removeChild);
+  }
+}
+
+function initializeButton() {
+  let button = document.getElementById("play-again");
+  button.addEventListener("click", playAgain);
+}
+
+export { emptyRender, placeShipListeners, addGuessClick, clearBoards };
