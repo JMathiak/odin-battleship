@@ -83,9 +83,10 @@
       background: green;
   }
 
-  .buttons{
+  .footer{
       border: 1px solid lime;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-content: center;
+      justify-items: center;
   }
