@@ -166,7 +166,7 @@ function guessClick() {
     userBoxOfInterest.classList.add("hit");
   }
   if (comp.board.checkForAllSunk() == true) {
-    alert("User has Won");
+    displayModal("User");
     //Method to remove all listeners
     return;
   }
@@ -191,7 +191,7 @@ function guessClick() {
     compBoxOfInterest.classList.add("hit");
   }
   if (user.board.checkForAllSunk() == true) {
-    alert("Comp has Won");
+    displayModal("Computer");
     //Method to remove all listeners
     return;
   }
@@ -225,9 +225,35 @@ function clearBoards() {
   }
 }
 
+function displayModal(winner) {
+  let modal = document.getElementById("display-winner-modal");
+  let div = document.getElementById("winner-modal-text");
+  modal.style.display = "block";
+  div.innerHTML = "The winner is the " + winner;
+}
+
 function initializeButton() {
   let button = document.getElementById("play-again");
+  let button2 = document.getElementById("display-modal");
+  let button3 = document.getElementById("okay-button");
+  let button4 = document.getElementById("play-again-modal");
+  let modal = document.getElementById("display-winner-modal");
   button.addEventListener("click", playAgain);
+  button2.addEventListener("click", displayModal);
+  button3.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  button4.addEventListener("click", function () {
+    modal.style.display = "none";
+    playAgain();
+  });
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
 }
 
 export {
