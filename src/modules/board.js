@@ -62,7 +62,6 @@ function emptyRender(div) {
     }
     parentDiv.appendChild(row);
   }
-  console.log(parentDiv.getElementsByClassName("row")[1].childNodes[0]);
 }
 function deleteBoard(div) {
   let parentDiv = document.getElementById(div);
@@ -82,7 +81,6 @@ function removeAddShips() {
 function refreshBoard(div, player, ship) {
   let parentDiv = document.getElementById(div);
   let rows = parentDiv.getElementsByClassName("row");
-  console.log(rows[1].childNodes);
   for (let i = 1; i < rows.length; i++) {
     let curRow = rows[i];
     let curYCord = curRow.getAttribute("y-cord");
@@ -105,12 +103,10 @@ function refreshBoard(div, player, ship) {
   if (shipIndex == 5) {
     shipsPlaced = true;
     document.getElementById("direction-form").style.display = "none";
-    console.log("here");
   }
 }
 
 function placeShipListeners() {
-  console.log(user);
   let parentDiv = document.getElementById("player");
   let rows = parentDiv.getElementsByClassName("row");
   //let direction = document.getElementById('direction-radio').value;
@@ -133,10 +129,7 @@ function onAddShipClick() {
   let direction = document.querySelector(
     'input[name = "direction"]:checked'
   ).value;
-  console.log(direction);
-  console.log(event.target);
-  console.log(event.target.parentNode.getAttribute("y-cord"));
-  console.log("xcord", event.target.getAttribute("x-cord"));
+
   if (
     user.board.placeShip(
       direction,

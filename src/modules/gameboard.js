@@ -17,17 +17,15 @@ function createGameBoard() {
     let startingRow = shipToPlace.startingCord.startingYCord;
     let endingColumn = shipToPlace.endingCord.endingXCord;
     let endingRow = shipToPlace.endingCord.endingYCord;
-    console.log(startingColumn, startingRow, endingColumn, endingRow);
+
     if (shipToPlace.direction == "vertical") {
       if (startingRow == 6) {
         return false;
       }
       if (endingRow > 6) {
-        console.log(shipToPlace.name, endingRow);
         return false;
       }
       for (let i = startingRow; i <= endingRow; i++) {
-        console.log(shipToPlace.name, this.board[i][startingColumn]);
         if (this.board[i][startingColumn] != "empty") {
           return false;
         }
@@ -40,7 +38,6 @@ function createGameBoard() {
         return false;
       }
       for (let j = startingColumn; j <= endingColumn; j++) {
-        console.log(shipToPlace.name, this.board[startingRow][j]);
         if (this.board[startingRow][j] != "empty") {
           return false;
         }
@@ -72,7 +69,7 @@ function createGameBoard() {
             name: ship.name,
             spot: ship.health[i],
           };
-          console.log(parseInt(xCord) + i);
+
           this.board[yCord][parseInt(xCord) + i] = placeObj;
         }
       } else if (direction == "vertical") {
@@ -96,15 +93,12 @@ function createGameBoard() {
       let shipName = this.board[yCord][xCord].name;
       let filteredArr = this.ships.filter((sh) => sh.name == shipName);
       let ship = filteredArr[0];
-      console.log(ship);
-      console.log("Received X Cord", xCord);
-      console.log("Received Y Cord", yCord);
+
       let pointArr = ship.health.filter(
         (point) =>
           point.coordinates.xCord == xCord && point.coordinates.yCord == yCord
       );
-      console.log(shipName);
-      console.log(pointArr);
+
       ship.hit(pointArr[0].shipPoint);
       ship.isSunk();
       return true;

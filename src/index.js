@@ -63,9 +63,7 @@ function placeComputerShips() {
       yCord = Math.floor(Math.random() * 7);
       direction = Math.floor(Math.random() * 2);
     }
-    console.log(ships[i].name, "placed");
   }
-  console.log(comp.board.board);
 }
 
 function setUpGame() {
