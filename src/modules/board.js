@@ -214,13 +214,14 @@ function addGuessClick() {
 }
 
 function clearBoards() {
+  shipIndex = 0;
   let userBoard = document.getElementById("player");
   let guessBoard = document.getElementById("guess");
   while (userBoard.firstChild) {
-    userBoard.removeChild(userBoard.removeChild);
+    userBoard.removeChild(userBoard.firstChild);
   }
   while (guessBoard.firstChild) {
-    guessBoard.removeChild(guessBoard.removeChild);
+    guessBoard.removeChild(guessBoard.firstChild);
   }
 }
 
@@ -229,4 +230,10 @@ function initializeButton() {
   button.addEventListener("click", playAgain);
 }
 
-export { emptyRender, placeShipListeners, addGuessClick, clearBoards };
+export {
+  emptyRender,
+  placeShipListeners,
+  addGuessClick,
+  clearBoards,
+  initializeButton,
+};
