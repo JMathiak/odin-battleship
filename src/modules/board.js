@@ -104,6 +104,7 @@ function refreshBoard(div, player, ship) {
   }
   if (shipIndex == 5) {
     shipsPlaced = true;
+    document.getElementById("direction-form").style.display = "none";
     console.log("here");
   }
 }
@@ -165,6 +166,7 @@ function guessClick() {
   } else if (comp.board.board[userYGuess][userXGuess] != "empty") {
     userBoxOfInterest.classList.add("hit");
   }
+  userBoxOfInterest.removeEventListener("click", guessClick);
   if (comp.board.checkForAllSunk() == true) {
     displayModal("User");
     //Method to remove all listeners
@@ -234,12 +236,11 @@ function displayModal(winner) {
 
 function initializeButton() {
   let button = document.getElementById("play-again");
-  let button2 = document.getElementById("display-modal");
   let button3 = document.getElementById("okay-button");
   let button4 = document.getElementById("play-again-modal");
   let modal = document.getElementById("display-winner-modal");
+  let modal2 = document.getElementById("how-to-play");
   button.addEventListener("click", playAgain);
-  button2.addEventListener("click", displayModal);
   button3.addEventListener("click", function () {
     modal.style.display = "none";
   });
@@ -249,9 +250,16 @@ function initializeButton() {
     playAgain();
   });
 
+  document.getElementById("play-button").addEventListener("click", function () {
+    modal2.style.display = "none";
+  });
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = "none";
+    }
+
+    if (event.target == modal2) {
+      modal2.style.display = "none";
     }
   };
 }
