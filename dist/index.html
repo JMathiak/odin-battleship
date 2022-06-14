@@ -6,11 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../src/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            
+            <div></div>
+            <div class="title">Battleship</div>
         </div>
         <div class="board">
             <div id="player-board">
@@ -21,16 +25,17 @@
             </div>
         </div>
         <div class="footer">
-            <form id="direction-form">
-                <p>Select Which Direction To Place Ships: </p>
-                <input type="radio" name="direction" id="horizontal" value="horizontal" checked>
-                <label for="horizontal">Horizontal</label><br>
-                <input type="radio" name="direction" id="vertical" value="vertical">
-                <label for="vertical">Vertical</label>
-            </form>
+            <div class="form-holder">
+                <form id="direction-form">
+                    <p>Select Which Direction To Place Ships: </p>
+                    <input type="radio" name="direction" id="horizontal" value="horizontal" checked>
+                    <label for="horizontal">Horizontal</label><br>
+                    <input type="radio" name="direction" id="vertical" value="vertical">
+                    <label for="vertical">Vertical</label>
+                </form>
+            </div>
             <div class="buttons">
                 <button id="play-again">Play Again</button>
-                <button id="display-modal">Display Modal</button>
             </div>
         </div>
         <div id="display-winner-modal">
@@ -42,8 +47,26 @@
                         <button id="play-again-modal">Play Again</button>
                     </div>
                 </div>
+            </div> 
+        </div>
+        <div id="how-to-play">
+            <div class="how-to-play-content">
+                <div class="modal-cont">
+                    <div class="welcome">Welcome To Battleship!</div>
+                    <div class="prep-phase">
+                        <div class="modal-header"> Prepare Your Fleet </div>
+                        <div class="prep-explain">Place your 5 ships in valid places by clicking on the board on the left, change the ship direction using the radio below your board </div>
+                    </div>
+                    <div class="guess-phase">
+                        <div class="modal-header"> Attack The Opponent</div>
+                        <div class="prep-explain">Attack the opponent by clicking on squares on the board on the right </div>
+                    </div>
+                    <div>
+                        <div class="play-again-explain">Clicking 'Play Again' at any time will reset your game</div>
+                    </div>
+                    <div class="welcome-button"><button id="play-button">Play</button></div>
+                </div>
             </div>
-            
         </div>
     </div>
     <script src="main.js"></script>
