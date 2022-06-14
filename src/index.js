@@ -7,6 +7,34 @@ import {
 } from "./modules/board";
 import createPlayer from "./modules/player";
 
+let ships = [
+  {
+    name: "Carrier",
+    length: 5,
+    placed: false,
+  },
+  {
+    name: "Battleship",
+    length: 4,
+    placed: false,
+  },
+  {
+    name: "Cruiser",
+    length: 3,
+    placed: false,
+  },
+  {
+    name: "Submarine",
+    length: 3,
+    placed: false,
+  },
+  {
+    name: "Destroyer",
+    length: 2,
+    placed: false,
+  },
+];
+
 function waitForShips() {
   if (shipsPlaced != true) {
     setTimeout(waitForShips, 500);
@@ -51,6 +79,7 @@ function playAgain() {
   clearBoards();
   clearArrays();
   shipsPlaced = false;
+  document.getElementById("direction-form").style.display = "block";
   emptyRender("player");
   placeShipListeners();
   emptyRender("guess");
